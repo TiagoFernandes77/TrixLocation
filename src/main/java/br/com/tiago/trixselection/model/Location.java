@@ -2,6 +2,7 @@ package br.com.tiago.trixselection.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Location implements Serializable{
 	private double longitude;
 	
 	@ManyToMany
-	@JoinTable(name="Location_Tag",
+	@JoinTable(name="LocationTag",
 		joinColumns= {@JoinColumn(name="location_id")},
 		inverseJoinColumns= {@JoinColumn(name="tag_id")})
 	private List<Tag> tags;
@@ -84,5 +85,13 @@ public class Location implements Serializable{
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
+	}
+	
+	public void setTag(Tag tag){
+		if(tags == null){
+			tags = new ArrayList<Tag>();
+		}
+		
+		tags.add(tag);
 	}
 }
