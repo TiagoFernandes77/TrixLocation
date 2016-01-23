@@ -2,18 +2,20 @@ package br.com.tiago.trixselection.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.tiago.trixselection.model.Tag;
 
+@Repository
 public class TagDao extends GenericDao<Tag, Integer> {
 	
-	@Override
-	public void delete(Tag entity) throws Exception {
-		List<Tag> tags = (List<Tag>) this.executeQuery("SELECT * FROM LocationTag WHERE tag_id= 0", entity.getId());
+	public Tag getByName(String name){
+		List<Tag> tags = (List<Tag>) this.executeQuery("FROM Tag WHERE name= ?0 ", name);
 		
-		if(tags.size() > 0)
-			throw new Exception("The tag is associated with a location.");
+		if(tags != null && tags.size() > 0)
+			return tags.get(0);
 		
-		super.delete(entity);
+		return null;
 	}
 
 }

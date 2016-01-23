@@ -1,21 +1,15 @@
 package br.com.tiago.trixselection.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import br.com.tiago.trixselection.model.Location;
 import br.com.tiago.trixselection.model.Tag;
 
+@Repository
 public class LocationDao extends GenericDao<Location, Integer> {
 	
 	public void save(Location location, Tag tag) throws Exception{
-		List<Tag> tags = location.getTags();
-		
-		if(tags == null)
-			tags = new ArrayList<Tag>();
-		
-		tags.add(tag);
-		
+		location.setTag(tag);		
 		update(location);
 	}
 }

@@ -16,7 +16,7 @@ public class Tag implements Serializable{
 	@GeneratedValue
 	private int id;
 	
-	private String nome;
+	private String name;
 	
 	private Date created;
 	
@@ -32,12 +32,12 @@ public class Tag implements Serializable{
 		this.id = id;
 	}
 	
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getCreated() {
