@@ -19,7 +19,8 @@ import br.com.tiago.trixselection.service.LocationService;
 import br.com.tiago.trixselection.service.TagService;
 
 @RestController
-public class Controller {
+@RequestMapping(value="/location")
+public class LocationController {
 
 	@Autowired
 	private LocationService locationService;
@@ -27,24 +28,24 @@ public class Controller {
 	@Autowired
 	private TagService tagService;
 
-	@RequestMapping("/location")
+	@RequestMapping("/")
 	private List<Location> getLocations() {
 		return locationService.listAll();
 	}
 
-	@RequestMapping("/location/{locationId}")
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
 	private Location getLocation(@PathVariable("locationId") Integer locationId) {
 		return locationService.getLocationById(locationId);
 	}
 
-	@RequestMapping(value = "/location/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	private Location setLocation(@RequestBody Location location)
 			throws Exception {
 		locationService.create(location);
 		return location;
 	}
 
-	@RequestMapping(value = "/location/{locationId}/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.DELETE)
 	private Location deleteLocation(
 			@PathVariable("locationId") Integer locationId) throws Exception {
 		Location location = locationService.getLocationById(locationId);
@@ -54,13 +55,13 @@ public class Controller {
 		return location;
 	}
 
-	@RequestMapping(value = "/location/update", method = RequestMethod.POST)
-	private void updateLocation(@RequestBody Location location)
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.POST)
+	private void updateLocation(@PathVariable("locationId") Integer locationId, @RequestBody Location location)
 			throws Exception {
 		locationService.update(location);
 	}
 
-	@RequestMapping(value = "/location/{locationId}/setTag", method = RequestMethod.POST)
+	@RequestMapping(value = "/{locationId}/tag", method = RequestMethod.POST)
 	private void setTag(@PathVariable("locationId") Integer locationId,
 			@RequestBody Tag tag) throws Exception {
 
@@ -71,48 +72,12 @@ public class Controller {
 		locationService.setTagById(tag, locationId);
 	}
 
-	@RequestMapping(value = "/location/{locationId}/setTag/{tagId}")
+	@RequestMapping(value = "/{locationId}/tag/{tagId}", method = RequestMethod.POST)
 	private void setTagById(@PathVariable("locationId") Integer locationId,
 			@PathVariable("tagId") Integer tagId) throws Exception {
 
 		Tag tag = tagService.getTagById(tagId);
 
 		locationService.setTagById(tag, locationId);
-	}
-
-	@RequestMapping("/tag")
-	private List<Tag> getTag() {
-		return tagService.listAll();
-	}
-
-	@RequestMapping("/tag/{tagId}")
-	private Tag getTags(@PathVariable("tagId") Integer tagId) {
-		return tagService.getTagById(tagId);
-	}
-
-	@RequestMapping(value = "/tag/new", method = RequestMethod.POST)
-	private void setTag(@RequestBody Tag tag) throws Exception {
-		tagService.create(tag);
-	}
-
-	@RequestMapping(value = "/tag/{tagId}/delete", method = RequestMethod.DELETE)
-	private Tag deleteTag(@PathVariable("tagId") Integer tagId)
-			throws Exception {
-		Tag tag = tagService.getTagById(tagId);
-
-		tagService.delete(tag);
-		return tag;
-	}
-
-	@RequestMapping(value = "/tag/update", method = RequestMethod.POST)
-	private void updateTag(@RequestBody Tag tag) throws Exception {
-		tagService.update(tag);
-	}
-
-	@ExceptionHandler(Exception.class)
-	@ResponseBody
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	private String handleException(Exception e) {
-		return "Error: " + e.getMessage();
 	}
 }
