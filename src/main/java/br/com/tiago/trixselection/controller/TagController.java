@@ -39,12 +39,11 @@ public class TagController {
 	}
 
 	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.DELETE)
-	private Tag deleteTag(@PathVariable("tagId") Integer tagId)
+	private void deleteTag(@PathVariable("tagId") Integer tagId)
 			throws Exception {
 		Tag tag = tagService.getTagById(tagId);
 
 		tagService.delete(tag);
-		return tag;
 	}
 
 	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.POST)

@@ -39,20 +39,17 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	private Location setLocation(@RequestBody Location location)
+	private void setLocation(@RequestBody Location location)
 			throws Exception {
 		locationService.create(location);
-		return location;
 	}
 
 	@RequestMapping(value = "/{locationId}", method = RequestMethod.DELETE)
-	private Location deleteLocation(
+	private void deleteLocation(
 			@PathVariable("locationId") Integer locationId) throws Exception {
 		Location location = locationService.getLocationById(locationId);
 
 		locationService.delete(location);
-
-		return location;
 	}
 
 	@RequestMapping(value = "/{locationId}", method = RequestMethod.POST)
