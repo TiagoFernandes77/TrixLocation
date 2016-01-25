@@ -50,7 +50,6 @@ public class TagServiceImp implements TagService {
 		try {
 			tagDao.delete(tag);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception(
 					"This tag is associated with an existing Location.");
 		}
