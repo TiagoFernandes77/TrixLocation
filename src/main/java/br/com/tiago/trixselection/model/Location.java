@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Location implements Serializable{
 	
 	private double longitude;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="LocationTag",
 		joinColumns= {@JoinColumn(name="location_id")},
 		inverseJoinColumns= {@JoinColumn(name="tag_id")})

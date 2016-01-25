@@ -11,14 +11,14 @@ import br.com.tiago.trixselection.model.Tag;
 import br.com.tiago.trixselection.service.TagService;
 
 @Service
-public class TagServiceImp implements TagService{
-	
+public class TagServiceImp implements TagService {
+
 	@Autowired
 	TagDao tagDao;
-	
+
 	@Autowired
 	LocationDao locationDao;
-	
+
 	@Override
 	public List<Tag> listAll() {
 		return tagDao.findAll();
@@ -30,26 +30,30 @@ public class TagServiceImp implements TagService{
 	}
 
 	@Override
-	public void create(Tag tag) {
+	public void create(Tag tag) throws Exception {
 		try {
 			tagDao.save(tag);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception("Tag's name already exists.");
 		}
 	}
 
 	@Override
-	public void update(Tag tag) {
-		try {
-			tagDao.update(tag);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void update(Tag tag) throws Exception {
+		tagDao.update(tag);
 	}
 
 	@Override
 	public void delete(Tag tag) throws Exception {
-		tagDao.delete(tag);		
+		if (tag == null)
+			throw new Exception("Tag not found.");
+		try {
+			tagDao.delete(tag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(
+					"This tag is associated with an existing Location.");
+		}
 	}
 
 	@Override
