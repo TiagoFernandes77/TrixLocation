@@ -19,7 +19,7 @@ import br.com.tiago.trixselection.service.LocationService;
 import br.com.tiago.trixselection.service.TagService;
 
 @RestController
-@RequestMapping(value="/location")
+@RequestMapping(value="/locations")
 public class LocationController {
 
 	@Autowired

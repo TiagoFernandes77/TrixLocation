@@ -17,7 +17,7 @@ import br.com.tiago.trixselection.model.Tag;
 import br.com.tiago.trixselection.service.TagService;
 
 @RestController
-@RequestMapping(value="/tag")
+@RequestMapping(value="/tags")
 public class TagController {
 	
 	@Autowired
