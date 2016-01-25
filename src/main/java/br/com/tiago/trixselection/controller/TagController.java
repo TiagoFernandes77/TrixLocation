@@ -23,23 +23,23 @@ public class TagController {
 	@Autowired
 	TagService tagService;
 	
-	@RequestMapping(value = "/tag", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	private List<Tag> getTag() {
 		return tagService.listAll();
 	}
 
-	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{tagId}", method = RequestMethod.GET)
 	private Tag getTags(@PathVariable("tagId") Integer tagId) {
 		return tagService.getTagById(tagId);
 	}
 	
-	@RequestMapping(value = "/tag", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	private void setTag(@RequestBody Tag tag) throws Exception {
 		tagService.create(tag);
 	}
 
-	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{tagId}", method = RequestMethod.DELETE)
 	private void deleteTag(@PathVariable("tagId") Integer tagId)
 			throws Exception {
 		Tag tag = tagService.getTagById(tagId);
