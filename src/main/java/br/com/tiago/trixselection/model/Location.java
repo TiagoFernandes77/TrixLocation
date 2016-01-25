@@ -20,15 +20,15 @@ public class Location implements Serializable{
 	
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	
 	private String name;
 	
 	private Date created;
 	
-	private double latitude;
+	private Double latitude;
 	
-	private double longitude;
+	private Double longitude;
 	
 	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="LocationTag",
@@ -40,11 +40,11 @@ public class Location implements Serializable{
 		
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -64,19 +64,19 @@ public class Location implements Serializable{
 		this.created = created;
 	}
 	
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 	
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 	
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 	
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 

@@ -14,7 +14,7 @@ public class Tag implements Serializable{
 	
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	
 	private String name;
 	
@@ -24,11 +24,11 @@ public class Tag implements Serializable{
 		
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		return id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		this.id = id;
 	}
 	
