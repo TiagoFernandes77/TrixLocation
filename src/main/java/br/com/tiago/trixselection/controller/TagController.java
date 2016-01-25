@@ -32,8 +32,9 @@ public class TagController {
 	private Tag getTags(@PathVariable("tagId") Integer tagId) {
 		return tagService.getTagById(tagId);
 	}
-
+	
 	@RequestMapping(value = "/tag", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED)
 	private void setTag(@RequestBody Tag tag) throws Exception {
 		tagService.create(tag);
 	}
@@ -46,7 +47,7 @@ public class TagController {
 		tagService.delete(tag);
 	}
 
-	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.PUT)
 	private void updateTag(@PathVariable("tagId") Integer tagId, @RequestBody Tag tag) throws Exception {
 		tagService.update(tag);
 	}
