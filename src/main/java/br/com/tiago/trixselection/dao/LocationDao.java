@@ -7,9 +7,9 @@ import br.com.tiago.trixselection.model.Tag;
 
 @Repository
 public class LocationDao extends GenericDao<Location, Integer> {
-	
-	public void save(Location location, Tag tag) throws Exception{
-		location.setTag(tag);		
+
+	public void save(Location location, Tag tag) throws Exception {
+		location.setTag(tag);
 		update(location);
 	}
 }

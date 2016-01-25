@@ -81,24 +81,24 @@ public abstract class GenericDao<T, PK> {
 		}
 	}
 
-	public void beginTransaction(){
+	public void beginTransaction() {
 		this.entityManager.getTransaction().begin();
 	}
 
-	public void commit(){
+	public void commit() {
 		this.entityManager.getTransaction().commit();
 	}
 
-	public void close(){
+	public void close() {
 		this.entityManager.close();
 		this.factory.close();
 	}
 
-	public void rollBack(){
+	public void rollBack() {
 		this.entityManager.getTransaction().rollback();
 	}
 
-	public EntityManager getEntityManager(){
+	public EntityManager getEntityManager() {
 		return this.entityManager;
 	}
 

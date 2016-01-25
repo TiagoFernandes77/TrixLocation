@@ -31,84 +31,88 @@ public class Controller {
 	private List<Location> getLocations() {
 		return locationService.listAll();
 	}
-	
+
 	@RequestMapping("/location/{locationId}")
 	private Location getLocation(@PathVariable("locationId") Integer locationId) {
 		return locationService.getLocationById(locationId);
 	}
-	
+
 	@RequestMapping(value = "/location/new", method = RequestMethod.POST)
-	private Location setLocation(@RequestBody Location location) throws Exception {
+	private Location setLocation(@RequestBody Location location)
+			throws Exception {
 		locationService.create(location);
 		return location;
 	}
-	
+
 	@RequestMapping(value = "/location/{locationId}/delete", method = RequestMethod.DELETE)
-	private Location deleteLocation(@PathVariable("locationId") Integer locationId) throws Exception{
+	private Location deleteLocation(
+			@PathVariable("locationId") Integer locationId) throws Exception {
 		Location location = locationService.getLocationById(locationId);
-		
+
 		locationService.delete(location);
-		
+
 		return location;
 	}
-	
+
 	@RequestMapping(value = "/location/update", method = RequestMethod.POST)
-	private void updateLocation(@RequestBody Location location) throws Exception{		
+	private void updateLocation(@RequestBody Location location)
+			throws Exception {
 		locationService.update(location);
 	}
 
 	@RequestMapping(value = "/location/{locationId}/setTag", method = RequestMethod.POST)
 	private void setTag(@PathVariable("locationId") Integer locationId,
 			@RequestBody Tag tag) throws Exception {
-		
-		tagService.create(tag);	
-		
+
+		tagService.create(tag);
+
 		tag = tagService.getTagByName(tag.getName());
 
 		locationService.setTagById(tag, locationId);
 	}
-	
+
 	@RequestMapping(value = "/location/{locationId}/setTag/{tagId}")
 	private void setTagById(@PathVariable("locationId") Integer locationId,
 			@PathVariable("tagId") Integer tagId) throws Exception {
 
 		Tag tag = tagService.getTagById(tagId);
-		
+
 		locationService.setTagById(tag, locationId);
 	}
-	
+
 	@RequestMapping("/tag")
 	private List<Tag> getTag() {
 		return tagService.listAll();
 	}
-	
+
 	@RequestMapping("/tag/{tagId}")
 	private Tag getTags(@PathVariable("tagId") Integer tagId) {
 		return tagService.getTagById(tagId);
 	}
-	
+
 	@RequestMapping(value = "/tag/new", method = RequestMethod.POST)
 	private void setTag(@RequestBody Tag tag) throws Exception {
 		tagService.create(tag);
 	}
-	
+
 	@RequestMapping(value = "/tag/{tagId}/delete", method = RequestMethod.DELETE)
-	private Tag deleteTag(@PathVariable("tagId") Integer tagId) throws Exception{
+	private Tag deleteTag(@PathVariable("tagId") Integer tagId)
+			throws Exception {
 		Tag tag = tagService.getTagById(tagId);
 
 		tagService.delete(tag);
 		return tag;
 	}
-	
+
 	@RequestMapping(value = "/tag/update", method = RequestMethod.POST)
-	private void updateTag(@RequestBody Tag tag) throws Exception{		
+	private void updateTag(@RequestBody Tag tag) throws Exception {
 		tagService.update(tag);
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	private String handleException(Exception e) {
-	    return "Error: " + e.getMessage();
+		return "Error: " + e.getMessage();
 	}
 }

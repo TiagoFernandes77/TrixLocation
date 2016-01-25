@@ -21,17 +21,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
-	@Override
-	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and()
-	                        .withUser("admin").password("password").roles("USER", "ADMIN");
-	 }
 
-	 // Expose the UserDetailsService as a Bean
-	 @Bean
-	 @Override
-	 public UserDetailsService userDetailsServiceBean() throws Exception {
-	        return super.userDetailsServiceBean();
-	 }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
+		auth.inMemoryAuthentication().withUser("user").password("password")
+				.roles("USER").and().withUser("admin").password("password")
+				.roles("USER", "ADMIN");
+	}
+
+	// Expose the UserDetailsService as a Bean
+	@Bean
+	@Override
+	public UserDetailsService userDetailsServiceBean() throws Exception {
+		return super.userDetailsServiceBean();
+	}
 }

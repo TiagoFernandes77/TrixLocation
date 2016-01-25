@@ -8,30 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Tag implements Serializable{
+public class Tag implements Serializable {
 
 	private static final long serialVersionUID = -31976915860190208L;
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String name;
-	
+
 	private Date created;
-	
-	public Tag(){
-		
+
+	public Tag() {
+
 	}
-	
-	public Integer getId(){
+
+	public Integer getId() {
 		return id;
 	}
-	
-	public void setId(Integer id){
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -46,5 +46,5 @@ public class Tag implements Serializable{
 
 	public void setCreated(Date created) {
 		this.created = created;
-	}	
+	}
 }

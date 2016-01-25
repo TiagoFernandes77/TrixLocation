@@ -5,7 +5,8 @@ import javax.persistence.Persistence;
 
 public final class DaoFactory {
 
-	private DaoFactory() { }
+	private DaoFactory() {
+	}
 
 	private static final String PERSISTENCE_UNIT_NAME = "wprojectPersistenceUnit";
 
@@ -13,7 +14,8 @@ public final class DaoFactory {
 
 	public static EntityManagerFactory entityManagerFactorInstance() {
 		if (entityManagerFactoryInstance == null) {
-			entityManagerFactoryInstance = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+			entityManagerFactoryInstance = Persistence
+					.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		}
 
 		return entityManagerFactoryInstance;
