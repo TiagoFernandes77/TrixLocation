@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tiago.trixselection.exception.NotFoundException;
 import br.com.tiago.trixselection.model.Location;
 import br.com.tiago.trixselection.model.Tag;
 import br.com.tiago.trixselection.service.LocationService;
@@ -28,14 +28,19 @@ public class LocationController {
 	@Autowired
 	private TagService tagService;
 
-	@RequestMapping("/")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	private List<Location> getLocations() {
 		return locationService.listAll();
 	}
 
 	@RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
 	private Location getLocation(@PathVariable("locationId") Integer locationId) {
-		return locationService.getLocationById(locationId);
+		Location location = locationService.getLocationById(locationId);
+		
+		if (location == null)
+			throw new NotFoundException();
+		
+		return location;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -49,7 +54,7 @@ public class LocationController {
 	private void deleteLocation(
 			@PathVariable("locationId") Integer locationId) throws Exception {
 		Location location = locationService.getLocationById(locationId);
-
+		
 		locationService.delete(location);
 	}
 
@@ -60,6 +65,7 @@ public class LocationController {
 	}
 
 	@RequestMapping(value = "/{locationId}/tag", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED)
 	private void setTag(@PathVariable("locationId") Integer locationId,
 			@RequestBody Tag tag) throws Exception {
 
@@ -77,5 +83,11 @@ public class LocationController {
 		Tag tag = tagService.getTagById(tagId);
 
 		locationService.setTagById(tag, locationId);
+	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Location not found.")
+	@ExceptionHandler(NotFoundException.class)
+	public void processNotFound() {
+		
 	}
 }

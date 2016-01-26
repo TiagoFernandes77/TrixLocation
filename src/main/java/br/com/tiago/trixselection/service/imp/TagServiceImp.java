@@ -2,11 +2,13 @@ package br.com.tiago.trixselection.service.imp;
 
 import java.util.List;
 
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tiago.trixselection.dao.LocationDao;
 import br.com.tiago.trixselection.dao.TagDao;
+import br.com.tiago.trixselection.exception.TagAssociateException;
 import br.com.tiago.trixselection.model.Tag;
 import br.com.tiago.trixselection.service.TagService;
 
@@ -31,11 +33,7 @@ public class TagServiceImp implements TagService {
 
 	@Override
 	public void create(Tag tag) throws Exception {
-		try {
-			tagDao.save(tag);
-		} catch (Exception e) {
-			throw new Exception("Tag's name already exists.");
-		}
+		tagDao.save(tag);
 	}
 
 	@Override
@@ -45,13 +43,11 @@ public class TagServiceImp implements TagService {
 
 	@Override
 	public void delete(Tag tag) throws Exception {
-		if (tag == null)
-			throw new Exception("Tag not found.");
-		try {
+		try{
 			tagDao.delete(tag);
-		} catch (Exception e) {
-			throw new Exception(
-					"This tag is associated with an existing Location.");
+		}
+		catch(IllegalStateException e){
+			throw new TagAssociateException();
 		}
 	}
 

@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tiago.trixselection.exception.NotFoundException;
+import br.com.tiago.trixselection.exception.TagAssociateException;
 import br.com.tiago.trixselection.model.Tag;
 import br.com.tiago.trixselection.service.TagService;
 
 @RestController
-@RequestMapping(value="/tags")
+@RequestMapping(value = "/tags")
 public class TagController {
-	
+
 	@Autowired
 	TagService tagService;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	private List<Tag> getTag() {
 		return tagService.listAll();
@@ -32,7 +33,7 @@ public class TagController {
 	private Tag getTags(@PathVariable("tagId") Integer tagId) {
 		return tagService.getTagById(tagId);
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	private void setTag(@RequestBody Tag tag) throws Exception {
@@ -48,14 +49,20 @@ public class TagController {
 	}
 
 	@RequestMapping(value = "/tag/{tagId}", method = RequestMethod.PUT)
-	private void updateTag(@PathVariable("tagId") Integer tagId, @RequestBody Tag tag) throws Exception {
+	private void updateTag(@PathVariable("tagId") Integer tagId,
+			@RequestBody Tag tag) throws Exception {
 		tagService.update(tag);
 	}
 
-	@ExceptionHandler(Exception.class)
-	@ResponseBody
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	private String handleException(Exception e) {
-		return "Error: " + e.getMessage();
+	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Tag not found.")
+	@ExceptionHandler(NotFoundException.class)
+	public void processNotFound() {
+
+	}
+
+	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "This tag can not be deleted because it is associated with a location.")
+	@ExceptionHandler(TagAssociateException.class)
+	public void processTagUndeletable() {
+
 	}
 }
